@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://unpkg.com/tailwindcss@1.9.6/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+
+  <body
+    class="h-screen overflow-hidden flex items-center justify-center"
+    style="background: #edf2f7"
+  >
+    <div class="flex h-screen antialiased text-gray-800">
+      <div class="flex flex-row h-full w-full overflow-x-hidden">
+        <!-- sidebar -->
+        <div
+          class="sidebar flex flex-col py-8 pl-6 pr-6 w-72 bg-white flex-shrink-0"
+        >
+          <div class="flex flex-row items-center justify-center h-12 w-full">
+            <div
+              class="flex items-center justify-center rounded-2xl text-indigo-700 bg-indigo-100 h-10 w-10"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
+                ></path>
+              </svg>
+            </div>
+
+            <!-- Admin Header -->
+            <div class="ml-2 font-bold text-xl">ChitChat Connect</div>
+          </div>
+          <div
+            class="flex flex-col items-center bg-indigo-100 border border-gray-200 mt-4 w-full py-6 px-4 rounded-lg"
+          >
+            <div class="h-20 w-20 rounded-full border overflow-hidden">
+              <img
+                src="assets/profile.png"
+                alt="Avatar"
+                class="h-full w-full"
+              />
+            </div>
+            <div class="text-sm font-semibold mt-2">Admin</div>
+            <div class="text-xs text-gray-500">Mern Developer</div>
+            <div class="flex flex-row items-center mt-3">
+              <div
+                class="flex flex-col justify-center h-4 w-8 bg-indigo-500 rounded-full"
+              >
+                <div class="h-3 w-3 bg-white rounded-full self-end mr-1"></div>
+              </div>
+              <div class="leading-none ml-1 text-xs">Active</div>
+            </div>
+          </div>
+
+          <!-- conversations -->
+          <div class="flex flex-col mt-8">
+            <div class="flex flex-row items-center justify-between text-xs">
+              <span class="font-bold text-lg">Conversations</span>
+              <span
+                class="flex items-center justify-center bg-gray-300 h-4 w-4 rounded-full"
+                >5</span
+              >
+            </div>
+            <div id="conversationsContainer" class="flex flex-col mt-8"></div>
+          </div>
+        </div>
+        <!-- !conversations -->
+        <!-- !sidebar -->
+
+        <!-- Chat window  -->
+        <div class="flex flex-col flex-auto h-full p-6" style="width: 80vw">
+          <div
+            class="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4"
+          >
+            <!-- Header -->
+            <div
+              class="flex items-center space-x-4 pb-3 px-2 bg-gray-100 border-b"
+            >
+              <div
+                class="flex items-center justify-center w-12 h-12 rounded-full text-white"
+                id="headerInitial"
+              ></div>
+              <div>
+                <div class="text-lg font-semibold" id="headerName"></div>
+                <div class="text-sm text-gray-500" id="headerPhone"></div>
+              </div>
+            </div>
+            <!-- !header -->
+
+            <!-- messages -->
+            <div
+              class="flex flex-col h-full overflow-x-auto mb-4 w-100vw messages-container"
+              id="messages-container"
+            >
+              <div class="flex flex-col h-full">
+                <div class="grid grid-cols-12 gap-y-2">
+                  <!-- Messages will be added here dynamically -->
+                </div>
+              </div>
+            </div>
+
+            <!-- input section -->
+            <div
+              class="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4"
+            >
+              <div>
+                <!-- Attachment options -->
+                <div
+                  id="attachmentOptions"
+                  class="absolute z-10 bg-white p-2 mt-2 rounded shadow bottom-16"
+                  style="display: none"
+                >
+                  <button
+                    class="attachmentOption border p-1 bg-indigo-100"
+                    onclick="showInput('image')"
+                  >
+                    Choose Image
+                  </button>
+                  <button
+                    class="attachmentOption border p-1 bg-indigo-100"
+                    onclick="showInput('audio')"
+                  >
+                    Choose Audio
+                  </button>
+                  <button
+                    class="attachmentOption border p-1 bg-indigo-100"
+                    onclick="showInput('video')"
+                  >
+                    Choose Video
+                  </button>
+                  <button
+                    class="attachmentOption border p-1 bg-indigo-100"
+                    onclick="showInput('document')"
+                  >
+                    Choose Document
+                  </button>
+                </div>
+
+                <!-- File input fields -->
+                <input
+                  type="file"
+                  id="imageInput"
+                  multiple
+                  accept="image/*"
+                  style="display: none"
+                  onchange="handleFileInputChange('image')"
+                />
+                <input
+                  type="file"
+                  id="audioInput"
+                  multiple
+                  accept="audio/*"
+                  style="display: none"
+                  onchange="handleFileInputChange('audio')"
+                />
+                <input
+                  type="file"
+                  id="videoInput"
+                  multiple
+                  accept="video/*"
+                  style="display: none"
+                  onchange="handleFileInputChange('video')"
+                />
+                <input
+                  type="file"
+                  id="documentInput"
+                  multiple
+                  accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                  style="display: none"
+                  onchange="handleFileInputChange('document')"
+                />
+
+                <!-- attachment -->
+                <button
+                  class="flex items-center justify-center text-gray-400 hover:text-gray-600"
+                  onclick="toggleAttachmentOptions()"
+                >
+                  <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
+                    ></path>
+                  </svg>
+                </button>
+                <!-- attachment -->
+
+                <!-- input field -->
+              </div>
+              <div class="flex-grow ml-4">
+                <div class="relative w-full">
+                  <input
+                    type="text"
+                    class="message-input flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
+                  />
+
+                  <!-- Send Button -->
+                </div>
+              </div>
+              <div class="ml-4">
+                <button
+                  class="send-button flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
+                >
+                  <span>Send</span>
+                  <span class="ml-2">
+                    <svg
+                      class="w-4 h-4 transform rotate-45 -mt-px"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                      ></path>
+                    </svg>
+                  </span>
+                </button>
+                <!-- send -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- chat window -->
+      </div>
+    </div>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>

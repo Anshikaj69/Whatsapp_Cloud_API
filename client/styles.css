@@ -1,0 +1,26 @@
+.messages-container {
+    max-height: 70vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.message-bubble {
+    padding: 8px 12px;
+    width: fit-content;
+    position: relative;
+    margin: 10px;
+}
+
+.message-bubble.right {
+    background-color: #bed5ec;
+    color: #5a5959;
+    border-top-right-radius: 0;
+    margin-left: auto;
+}
+
+.message-bubble.left {
+    background-color: #fff;
+    color: #000000;
+    border-top-left-radius: 0;
+    margin-right: auto;
+}
